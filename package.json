@@ -2,6 +2,7 @@
   "name": "fortune-ninja",
   "version": "0.0.1",
   "description": "A set of tools for testing Fortune-based interfaces",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:kkudryavtsev/fortune-ninja.git"
