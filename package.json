@@ -1,0 +1,20 @@
+{
+  "name": "fortune-ninja",
+  "version": "0.0.1",
+  "description": "A set of tools for testing Fortune-based interfaces"
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kkudryavtsev/fortune-ninja.git"
+  },
+  "private": false,
+  "dependencies": {
+    "sinon": "~1.10.2",
+    "lodash": "~2.4.1",
+    "when": "~3.4.5",
+    "requesto": "~0.0.1",
+    "mongodb": "~1.4.11",
+  },
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha --recursive -R spec"
+  }
+}
