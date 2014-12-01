@@ -16,3 +16,12 @@ ninja.connect({
 ```
 
 
+Currently Ninja has three main components:
+* `request`: a thin pre-configurable wrapper for requesto library
+* `fixtureFactory`: a mechanism for efficiently prepopulating a given fortune app with fixture data
+
+
+TODO:
+* better docs
+* segregate fixtureFactory into it's own npm package
+* move the pre-config code from the http wrapper into requesto
