@@ -1,4 +1,5 @@
 var ninja = require("../")(),
+    _ = require("lodash"),
     should = require("should"),
     fortuneClient = require("fortune-client");
 
@@ -40,22 +41,39 @@ describe("Fortune Ninja", function(){
   it("creates compound fixtures", function(done){
     ninja.fixture.create("users", {
       name: "Bob",
-      pets: ninja.fixture.create("pets",{name: "Dog"}).then(function(data){
-        console.log("create pets data", data);
-        return data;
-      })
-    }).then(function(data){
-      console.log(JSON.stringify(data, null, 2) );
-      return ninja.fortuneClient.getPets(null);
-    }).then(function(data){
-      console.log("pets data", data);
+      pets: ninja.fixture.create("pets",{name: "Dog"})
+    }).then(testCompound).done(done);
+  });
+
+  it("creates compound fixtures using nested jsons", function(done){
+    ninja.fixture.create("users", {
+      name: "Bob",
+      pets: [{
+        name: "Dog"
+      }]
+    }).then(testCompound)
+      .then(ninja.wipeCollections)
+      .then(_.partial(ninja.fixture.create, "users", {
+        name: "Bob",
+        //note: not an array
+        pets: {
+          name: "Dog"
+        }
+      }))
+      .then(testCompound)
+      .done(done);
+  });
+
+
+  function testCompound(){
+    return ninja.fortuneClient.getPets(null).then(function(data){
       return ninja.fortuneClient.getUsers(null,{include: "pets"});
     }).then(function(data){
       data.users.length.should.be.equal(1);
       data.linked.pets.length.should.be.equal(1);
       data.users[0].links.pets[0].should.be.equal(data.linked.pets[0].id);
-    }).done(done);
-  });
+    });
+  }
 
   afterEach(function(done){
     ninja.wipeCollections().then(done);
